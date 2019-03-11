@@ -16,6 +16,7 @@ type Props = {
   // placeholder?: Object,
 
   networkDetect?: boolean,
+  fallback?: 'none' | 'low' | 'audioOnly',
   speaking?: boolean,
   // audioDetect?: boolean,
   appendIcon?: Object,
@@ -43,6 +44,7 @@ export default class extends Component<Props, State> {
     placeholder: {},
 
     networkDetect: false,
+    fallback: 'none',
     speaking: false,
     // audioDetect: false,
     autoChange: true,
@@ -221,7 +223,7 @@ export default class extends Component<Props, State> {
         id={id}>
         {/* mask */}
         {(!this.props.video ||
-          !(this._snapshot && this._snapshot.hasVideo)) && (
+          !(this._snapshot && this._snapshot.hasVideo) || (this.props.fallback === 'audioOnly')) && (
           <div className="agora-player__placeholder">
             <img
               style={{ maxWidth: "80%" }}
